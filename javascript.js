@@ -195,7 +195,7 @@ button_eq.addEventListener('click', function() {
         [num1, operation, num2] = currentInput.split(" ");
         let result = calculate(operation, parseFloat(num1), parseFloat(num2));
         if (isFinite(result)) {
-            result = parseFloat(result.toFixed(10));
+            result = parseFloat(result.toFixed(7));
         }
         updateDisplay(result);
         currentInput = "";
