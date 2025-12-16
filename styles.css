@@ -3,6 +3,7 @@
     flex-direction: column;
     padding: 10px;
     justify-content: center;
+    align-items: center;
     width: 300px;
     border: 2px solid #333;
     border-radius: 10px;
@@ -15,12 +16,14 @@
     display: flex;
     align-items: center;
     height: 50px;
-    margin-bottom: 10px;
+    width: 250px;
+    margin-bottom: 5px;
+    margin-top: 5px;
     padding: 10px;
     overflow-x: auto;
     font-size: 22px;
     border: none;
-    border-radius: 5px;
+    border-radius: 10px;
     background-color: #444;
     color: #fff;
 }
@@ -32,7 +35,7 @@
     text-align: right;
     width: 100%;
     white-space: nowrap;
-    overflow-x: auto;
+    overflow: hidden;
 }
 
 #buttons_grid {

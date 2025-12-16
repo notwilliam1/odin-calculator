@@ -21,7 +21,7 @@ var operation;
 var num1;
 var num2;
 
-function calculate() {
+function calculate(operation, num1, num2) {
     switch (operation) {
         case '+':
             return add(num1, num2);
@@ -143,3 +143,73 @@ for (let btn of [
     btn.style.backgroundColor = '#444';
 }
 
+const resultDisplay = document.getElementById('result');
+
+let currentInput = "";
+
+function updateDisplay(value) {
+    resultDisplay.innerText = value !== undefined ? value : currentInput;
+}
+
+[button_0, button_1, button_2, button_3, button_4, button_5, button_6, button_7, button_8, button_9].forEach(btn => {
+    btn.addEventListener('click', function() {
+        currentInput += btn.textContent;
+        updateDisplay(currentInput);
+    });
+});
+
+[button_add, button_sub, button_mul, button_div].forEach(btn => {
+    btn.addEventListener('click', function() {
+        let parts = currentInput.trim().split(" ");
+        if (parts.length === 3 && parts[0] && parts[1] && parts[2]) {
+            let result = calculate(parts[1], parseFloat(parts[0]), parseFloat(parts[2]));
+            if (isFinite(result)) {
+                result = parseFloat(result.toFixed(7));
+            }
+            currentInput = result + " " + btn.textContent + " ";
+            updateDisplay(currentInput);
+        } else if (currentInput !== "" && !currentInput.trim().endsWith(btn.textContent)) {
+            currentInput += " " + btn.textContent + " ";
+            updateDisplay(currentInput);
+        }
+    });
+});
+
+button_ac.addEventListener('click', function() {
+    currentInput = "";
+    updateDisplay(currentInput);
+});
+
+button_del.addEventListener('click', function() {
+    currentInput = currentInput.trimEnd();
+    if (currentInput.endsWith(" ")) {
+        currentInput = currentInput.slice(0, -3);
+    } else {
+        currentInput = currentInput.slice(0, -1);
+    }
+    updateDisplay(currentInput);
+});
+
+button_eq.addEventListener('click', function() {
+    try {
+        [num1, operation, num2] = currentInput.split(" ");
+        let result = calculate(operation, parseFloat(num1), parseFloat(num2));
+        if (isFinite(result)) {
+            result = parseFloat(result.toFixed(10));
+        }
+        updateDisplay(result);
+        currentInput = "";
+    } catch {
+        updateDisplay("Error");
+        currentInput = "";
+    }
+});
+
+button_per.addEventListener('click', function() {
+    let parts = currentInput.split(/[\+\-\*\/]/);
+    let lastNumber = parts[parts.length - 1].trim();
+    if (!lastNumber.includes('.')) {
+        currentInput += '.';
+        updateDisplay(currentInput);
+    }
+});
